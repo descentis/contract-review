@@ -11,6 +11,7 @@ from haystack.document_stores import InMemoryDocumentStore
 from haystack.nodes import TextConverter, PDFToTextConverter, DocxToTextConverter, PreProcessor
 from haystack.pipelines import ExtractiveQAPipeline
 from haystack.nodes import TfidfRetriever
+import os
 import PyPDF2
 
 
