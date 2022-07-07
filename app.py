@@ -206,10 +206,14 @@ if Run_Button and st.session_state.boolean == False and len(selected_questions) 
     question_set = selected_questions
     with st.spinner('Running predictions...'):
         if st.session_state.boolean == False:
-            prediction = pipe.run(
-                query=questions[2], params={"Retriever": {"top_k": 1}, "Reader": {"top_k": 1}}
-            )
-            st.write(prediction['answers'])
+            predictions = []
+            for each in question_set:
+                prediction = pipe.run(
+                    query=questions[2], params={"Retriever": {"top_k": 1}, "Reader": {"top_k": 1}}
+                )
+                predictions.append(prediction)
+            for each in predictions:
+                st.write(each['answers'])
         else:
             st.write("Stopping the function")
             predictions = ""
