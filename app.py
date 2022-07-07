@@ -213,7 +213,7 @@ if Run_Button and st.session_state.boolean == False and len(selected_questions) 
                 )
                 predictions.append(prediction)
             for each in predictions:
-                st.write(each['answers'])
+                st.write(each['answers']['answer'])
         else:
             st.write("Stopping the function")
             predictions = ""
