@@ -126,9 +126,11 @@ retriever = None
 if uploaded_file is not None:
     # with open(os.path.join(fd.name, uploaded_file.name), "wb") as f:
     #     f.write(uploaded_file.getbuffer())
+    with open(uploaded_file.name, "wb") as f:
+        f.write(uploaded_file.getbuffer())
     # all_docs = convert_files_to_docs(dir_path=fd.name)
     converter = TextConverter(remove_numeric_tables=True, valid_languages=["en"])
-    doc_txt = converter.convert(file_path=uploaded_file, meta=None)[0]
+    doc_txt = converter.convert(file_path=uploaded_file.name, meta=None)[0]
 
     # converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
     # contract = converter.convert(file_path=uploaded_file, meta=None)[0]
