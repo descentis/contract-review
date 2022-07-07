@@ -17,7 +17,7 @@ import PyPDF2
 
 st.set_page_config(layout="wide")
 fd = tempfile.TemporaryDirectory()
-st.write(fd)
+st.write(fd.name)
 document_store = InMemoryDocumentStore()
 
 st.write("CPU:", multiprocessing.cpu_count())
@@ -124,9 +124,9 @@ uploaded_file = st.file_uploader("Choose a file (currently accepts pdf file form
 contract = ""
 retriever = None
 if uploaded_file is not None:
-    with open(os.path.join("/tmp/tmp1g1b3eju", uploaded_file.name), "wb") as f:
+    with open(os.path.join(fd.name, uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
-    all_docs = convert_files_to_docs(dir_path="/tmp/tmp1g1b3eju")
+    all_docs = convert_files_to_docs(dir_path=fd.name)
     # converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
     # contract = converter.convert(file_path=uploaded_file, meta=None)[0]
     # try:
