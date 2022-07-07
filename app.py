@@ -121,21 +121,21 @@ uploaded_file = st.file_uploader("Choose a file (currently accepts pdf file form
 contract = ""
 retriever = None
 if uploaded_file is not None:
-    # converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
-    # contract = converter.convert(file_path=uploaded_file, meta=None)[0]
-    try:
-        pdfReader = PyPDF2.PdfFileReader(uploaded_file)
-    except:
-        st.write("Error in reading file, please try another contract")
-    contract = ""
-    page_num = {}
-    for i in range(pdfReader.numPages):
-        pageObj = pdfReader.getPage(i)
-        contract += pageObj.extractText()
-        page_num[len(contract)] = i + 1
-    # page_num[len(contract.replace('\n', ''))] = i+1
-    # st.write(contract)
-    page_num = dict(sorted(page_num.items()))
+    converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
+    contract = converter.convert(file_path=uploaded_file, meta=None)[0]
+    # try:
+    #     pdfReader = PyPDF2.PdfFileReader(uploaded_file)
+    # except:
+    #     st.write("Error in reading file, please try another contract")
+    # contract = ""
+    # page_num = {}
+    # for i in range(pdfReader.numPages):
+    #     pageObj = pdfReader.getPage(i)
+    #     contract += pageObj.extractText()
+    #     page_num[len(contract)] = i + 1
+    # # page_num[len(contract.replace('\n', ''))] = i+1
+    # # st.write(contract)
+    # page_num = dict(sorted(page_num.items()))
     docs = [
         {
             'content': contract,
