@@ -16,8 +16,10 @@ import tempfile
 import PyPDF2
 
 st.set_page_config(layout="wide")
-fd = tempfile.TemporaryDirectory()
-st.write(fd.name)
+# fd = tempfile.TemporaryDirectory()
+# st.write(fd.name)
+
+os.mkdir("contracts")
 document_store = InMemoryDocumentStore()
 
 st.write("CPU:", multiprocessing.cpu_count())
@@ -124,13 +126,13 @@ uploaded_file = st.file_uploader("Choose a file (currently accepts pdf file form
 contract = ""
 retriever = None
 if uploaded_file is not None:
-    # with open(os.path.join(fd.name, uploaded_file.name), "wb") as f:
-    #     f.write(uploaded_file.getbuffer())
-    with open(uploaded_file.name, "wb") as f:
+    with open(os.path.join("contracts", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
-    # all_docs = convert_files_to_docs(dir_path=fd.name)
-    converter = TextConverter(remove_numeric_tables=True, valid_languages=["en"])
-    doc_txt = converter.convert(file_path=uploaded_file.name, meta=None)[0]
+    # with open(uploaded_file.name, "wb") as f:
+    #     f.write(uploaded_file.getbuffer())
+    all_docs = convert_files_to_docs(dir_path="contracts")
+    # converter = TextConverter(remove_numeric_tables=True, valid_languages=["en"])
+    # doc_txt = converter.convert(file_path=uploaded_file.name, meta=None)[0]
 
     # converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
     # contract = converter.convert(file_path=uploaded_file, meta=None)[0]
@@ -154,7 +156,7 @@ if uploaded_file is not None:
     #     }
     # ]
     #docs = preprocessor.process(doc_txt)
-    document_store.write_documents([doc_txt])
+    document_store.write_documents(all_docs)
     retriever = TfidfRetriever(document_store=document_store)
 
 
@@ -231,7 +233,7 @@ if Run_Button and st.session_state.boolean == False and len(selected_questions) 
                 )
                 predictions.append(prediction)
             for each in predictions:
-                st.write(each['answers'][0])
+                st.write(each['answers'])
         else:
             st.write("Stopping the function")
             predictions = ""
