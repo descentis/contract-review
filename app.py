@@ -18,8 +18,10 @@ import PyPDF2
 st.set_page_config(layout="wide")
 # fd = tempfile.TemporaryDirectory()
 # st.write(fd.name)
-
-os.mkdir("contracts")
+if os.path.isdir('contracts'):
+    pass
+else:
+    os.mkdir("contracts")
 document_store = InMemoryDocumentStore()
 
 st.write("CPU:", multiprocessing.cpu_count())
@@ -157,7 +159,9 @@ if uploaded_file is not None:
     # ]
     #docs = preprocessor.process(doc_txt)
     document_store.write_documents(all_docs)
-    retriever = TfidfRetriever(document_store=document_store)
+
+
+retriever = TfidfRetriever(document_store=document_store)
 
 
 try:
