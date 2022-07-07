@@ -4,6 +4,7 @@ from random import randint
 import multiprocessing
 
 from haystack.nodes import FARMReader, TransformersReader
+from haystack.utils import convert_files_to_docs
 
 # In-Memory Document Store
 from haystack.document_stores import InMemoryDocumentStore
@@ -35,8 +36,8 @@ st.markdown(f'''
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    #reader = FARMReader(model_name_or_path="CoreCLM-CR", use_gpu=False)
-    reader = TransformersReader(model_name_or_path="marshmellow77/roberta-base-cuad", tokenizer="marshmellow77/roberta-base-cuad", use_gpu=False)
+    reader = FARMReader(model_name_or_path="CoreCLM-CR", use_gpu=False)
+    #reader = TransformersReader(model_name_or_path="marshmellow77/roberta-base-cuad", tokenizer="marshmellow77/roberta-base-cuad", use_gpu=False)
     return reader
 
 
@@ -121,8 +122,11 @@ uploaded_file = st.file_uploader("Choose a file (currently accepts pdf file form
 contract = ""
 retriever = None
 if uploaded_file is not None:
-    converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
-    contract = converter.convert(file_path=uploaded_file, meta=None)[0]
+    with open(os.path.join("contracts", uploaded_file.name), "wb") as f:
+        f.write(uploaded_file.getbuffer())
+    all_docs = convert_files_to_docs(dir_path="contracts")
+    # converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
+    # contract = converter.convert(file_path=uploaded_file, meta=None)[0]
     # try:
     #     pdfReader = PyPDF2.PdfFileReader(uploaded_file)
     # except:
@@ -136,13 +140,13 @@ if uploaded_file is not None:
     # # page_num[len(contract.replace('\n', ''))] = i+1
     # # st.write(contract)
     # page_num = dict(sorted(page_num.items()))
-    docs = [
-        {
-            'content': contract,
-            'meta': {'name': uploaded_file.name}
-        }
-    ]
-    docs = preprocessor.process(docs)
+    # docs = [
+    #     {
+    #         'content': contract,
+    #         'meta': {'name': uploaded_file.name}
+    #     }
+    # ]
+    docs = preprocessor.process(all_docs)
     document_store.write_documents(docs)
     retriever = TfidfRetriever(document_store=document_store)
 
