@@ -112,8 +112,8 @@ preprocessor = PreProcessor(
     clean_empty_lines=True,
     clean_whitespace=True,
     clean_header_footer=True,
-    split_by="word",
-    split_length=200,
+    split_by="sentence",
+    split_length=10,
     split_respect_sentence_boundary=True,
 )
 
