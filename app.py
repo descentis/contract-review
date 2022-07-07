@@ -124,9 +124,12 @@ uploaded_file = st.file_uploader("Choose a file (currently accepts pdf file form
 contract = ""
 retriever = None
 if uploaded_file is not None:
-    with open(os.path.join(fd.name, uploaded_file.name), "wb") as f:
-        f.write(uploaded_file.getbuffer())
-    all_docs = convert_files_to_docs(dir_path=fd.name)
+    # with open(os.path.join(fd.name, uploaded_file.name), "wb") as f:
+    #     f.write(uploaded_file.getbuffer())
+    # all_docs = convert_files_to_docs(dir_path=fd.name)
+    converter = TextConverter(remove_numeric_tables=True, valid_languages=["en"])
+    doc_txt = converter.convert(file_path=uploaded_file, meta=None)[0]
+
     # converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
     # contract = converter.convert(file_path=uploaded_file, meta=None)[0]
     # try:
@@ -148,7 +151,7 @@ if uploaded_file is not None:
     #         'meta': {'name': uploaded_file.name}
     #     }
     # ]
-    docs = preprocessor.process(all_docs)
+    docs = preprocessor.process(doc_txt)
     document_store.write_documents(docs)
     retriever = TfidfRetriever(document_store=document_store)
 
