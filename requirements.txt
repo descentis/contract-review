@@ -2,4 +2,3 @@ git+https://github.com/deepset-ai/haystack.git
 PyPDF2==2.4.2
 farm-haystack
 streamlit
-tempfile
