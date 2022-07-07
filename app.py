@@ -218,7 +218,7 @@ if Run_Button and st.session_state.boolean == False and len(selected_questions) 
             predictions = []
             for each in question_set:
                 prediction = pipe.run(
-                    query=each, params={"Retriever": {"top_k": 1}, "Reader": {"top_k": 1}}
+                    query=each, params={"Retriever": {"top_k": 1}, "Reader": {"top_k": 5}}
                 )
                 predictions.append(prediction)
             for each in predictions:
