@@ -17,7 +17,7 @@ import PyPDF2
 
 
 fd = tempfile.TemporaryDirectory()
-print('created temporary directory', fd)
+st.write(fd)
 document_store = InMemoryDocumentStore()
 
 st.set_page_config(layout="wide")
