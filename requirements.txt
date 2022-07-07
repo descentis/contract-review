@@ -3,3 +3,4 @@ PyPDF2==2.4.2
 farm-haystack
 streamlit
 farm-haystack[ocr]
+pdftotext
