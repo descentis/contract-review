@@ -123,15 +123,28 @@ preprocessor = PreProcessor(
 
 reader = load_model()
 questions = load_questions()
+
+@st.cache(allow_output_mutation=True)
+def get_docs(uploaded_file):
+    all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
+    document_store.write_documents(all_docs)
+
+@st.cache(allow_output_mutation=True)
+def get_retriever():
+    retriever = TfidfRetriever(document_store=document_store)
+    return retriever
+
 uploaded_file = st.file_uploader("Choose a file (currently accepts pdf file format)", key=st.session_state.key)
 contract = ""
 retriever = None
 if uploaded_file is not None:
     with open(os.path.join("contracts", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
+
+    get_docs()
     # with open(uploaded_file.name, "wb") as f:
     #     f.write(uploaded_file.getbuffer())
-    all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
+    #all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
     # converter = TextConverter(remove_numeric_tables=True, valid_languages=["en"])
     # doc_txt = converter.convert(file_path=uploaded_file.name, meta=None)[0]
 
@@ -157,12 +170,9 @@ if uploaded_file is not None:
     #     }
     # ]
     #docs = preprocessor.process(doc_txt)
-    document_store.write_documents(all_docs)
+    #document_store.write_documents(all_docs)
 
-
-retriever = TfidfRetriever(document_store=document_store)
-
-
+retriever = get_retriever()
 try:
     with st.expander("Expand the contract document"):
         st.write(contract)
