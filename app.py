@@ -124,7 +124,7 @@ uploaded_file = st.file_uploader("Choose a file (currently accepts pdf file form
 contract = ""
 retriever = None
 if uploaded_file is not None:
-    with open(os.path.join("contracts", uploaded_file.name), "wb") as f:
+    with open(os.path.join("/tmp/tmp1g1b3eju", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
     all_docs = convert_files_to_docs(dir_path="contracts")
     # converter = PDFToTextConverter(remove_numeric_tables=True, valid_languages=["en"])
