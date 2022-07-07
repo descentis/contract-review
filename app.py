@@ -125,9 +125,9 @@ reader = load_model()
 questions = load_questions()
 
 @st.cache(allow_output_mutation=True)
-def get_docs(uploaded_file):
+def get_docs():
     all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
-    document_store.write_documents(all_docs)
+    return all_docs
 
 @st.cache(allow_output_mutation=True)
 def get_retriever():
@@ -141,7 +141,8 @@ if uploaded_file is not None:
     with open(os.path.join("contracts", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
 
-    get_docs(uploaded_file)
+    all_docs = get_docs()
+    document_store.write_documents(all_docs)
     # with open(uploaded_file.name, "wb") as f:
     #     f.write(uploaded_file.getbuffer())
     #all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
