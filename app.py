@@ -153,8 +153,8 @@ if uploaded_file is not None:
     #         'meta': {'name': uploaded_file.name}
     #     }
     # ]
-    docs = preprocessor.process(doc_txt)
-    document_store.write_documents(docs)
+    #docs = preprocessor.process(doc_txt)
+    document_store.write_documents(doc_text)
     retriever = TfidfRetriever(document_store=document_store)
 
 
