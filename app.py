@@ -154,7 +154,7 @@ if uploaded_file is not None:
     #     }
     # ]
     #docs = preprocessor.process(doc_txt)
-    document_store.write_documents(doc_text)
+    document_store.write_documents(doc_txt)
     retriever = TfidfRetriever(document_store=document_store)
 
 
