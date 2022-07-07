@@ -12,9 +12,12 @@ from haystack.nodes import TextConverter, PDFToTextConverter, DocxToTextConverte
 from haystack.pipelines import ExtractiveQAPipeline
 from haystack.nodes import TfidfRetriever
 import os
+import tempfile
 import PyPDF2
 
 
+with tempfile.TemporaryDirectory() as contracts:
+    print('created temporary directory', contracts)
 document_store = InMemoryDocumentStore()
 
 st.set_page_config(layout="wide")
