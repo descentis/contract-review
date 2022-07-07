@@ -108,6 +108,14 @@ def clear_multi():
     st.session_state.multiselect = []
     return
 
+preprocessor = PreProcessor(
+    clean_empty_lines=True,
+    clean_whitespace=True,
+    clean_header_footer=False,
+    split_by="word",
+    split_length=100,
+    split_respect_sentence_boundary=True,
+)
 
 reader = load_model()
 questions = load_questions()
@@ -136,6 +144,7 @@ if uploaded_file is not None:
             'meta': {'name': uploaded_file.name}
         }
     ]
+    docs = preprocessor.process(docs)
     document_store.write_documents(docs)
     retriever = TfidfRetriever(document_store=document_store)
 
