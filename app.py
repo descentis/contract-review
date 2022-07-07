@@ -4,14 +4,13 @@ from random import randint
 import multiprocessing
 
 from haystack.nodes import FARMReader, TransformersReader
-from haystack.utils import convert_files_to_docs
-
 # In-Memory Document Store
 from haystack.document_stores import InMemoryDocumentStore
 from haystack.nodes import TextConverter, PDFToTextConverter, DocxToTextConverter, PreProcessor
 from haystack.pipelines import ExtractiveQAPipeline
 from haystack.nodes import TfidfRetriever
 import os
+from haystack.utils import clean_wiki_text, convert_files_to_docs, print_answers
 import tempfile
 import PyPDF2
 
@@ -132,7 +131,7 @@ if uploaded_file is not None:
         f.write(uploaded_file.getbuffer())
     # with open(uploaded_file.name, "wb") as f:
     #     f.write(uploaded_file.getbuffer())
-    all_docs = convert_files_to_docs(dir_path="contracts")
+    all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
     # converter = TextConverter(remove_numeric_tables=True, valid_languages=["en"])
     # doc_txt = converter.convert(file_path=uploaded_file.name, meta=None)[0]
 
