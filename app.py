@@ -141,7 +141,7 @@ if uploaded_file is not None:
     with open(os.path.join("contracts", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
 
-    get_docs()
+    get_docs(uploaded_file)
     # with open(uploaded_file.name, "wb") as f:
     #     f.write(uploaded_file.getbuffer())
     #all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
