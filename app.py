@@ -33,9 +33,9 @@ st.markdown(f'''
 ''', unsafe_allow_html=True)
 
 
-#@st.cache(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def load_model():
-    reader = FARMReader(model_name_or_path="descentis/distilbert-cuad", use_gpu=False)
+    reader = FARMReader(model_name_or_path="CoreCLM-CR", use_gpu=False)
     return reader
 
 
