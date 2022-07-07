@@ -114,7 +114,7 @@ preprocessor = PreProcessor(
     clean_header_footer=True,
     split_by="sentence",
     split_length=10,
-    split_respect_sentence_boundary=True,
+    split_respect_sentence_boundary=None,
 )
 
 reader = load_model()
