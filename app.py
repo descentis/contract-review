@@ -35,7 +35,8 @@ st.markdown(f'''
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    reader = FARMReader(model_name_or_path="CoreCLM-CR", use_gpu=False)
+    #reader = FARMReader(model_name_or_path="CoreCLM-CR", use_gpu=False)
+    reader = TransformersReader(model_name_or_path="marshmellow77/roberta-base-cuad", tokenizer="marshmellow77/roberta-base-cuad", use_gpu=False)
     return reader
 
 
