@@ -15,12 +15,10 @@ import os
 import tempfile
 import PyPDF2
 
-
+st.set_page_config(layout="wide")
 fd = tempfile.TemporaryDirectory()
 st.write(fd)
 document_store = InMemoryDocumentStore()
-
-st.set_page_config(layout="wide")
 
 st.write("CPU:", multiprocessing.cpu_count())
 with st.sidebar:
