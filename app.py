@@ -126,7 +126,7 @@ questions = load_questions()
 
 @st.cache(allow_output_mutation=True)
 def get_docs():
-    all_docs = convert_files_to_docs(dir_path="contracts", clean_func=clean_wiki_text, split_paragraphs=True)
+    all_docs = convert_files_to_docs(dir_path="contracts", split_paragraphs=True)
     return all_docs
 
 @st.cache(allow_output_mutation=True)
